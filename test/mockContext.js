@@ -271,6 +271,7 @@
 		var canvas = document.createElement('canvas');
 		var chart, key;
 
+		config = config || {};
 		options = options || {};
 		options.canvas = options.canvas || {height: 512, width: 512};
 		options.wrapper = options.wrapper || {class: 'chartjs-wrapper'};
