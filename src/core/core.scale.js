@@ -39,7 +39,7 @@ module.exports = function(Chart) {
 			minRotation: 0,
 			maxRotation: 50,
 			mirror: false,
-			padding: 10,
+			padding: 0,
 			reverse: false,
 			display: true,
 			autoSkip: true,
@@ -599,7 +599,7 @@ module.exports = function(Chart) {
 							labelX = me.right + optionTicks.padding;
 							textAlign = 'left';
 						} else {
-							labelX = me.right - optionTicks.padding;
+							labelX = me.right - tl - optionTicks.padding;
 							textAlign = 'right';
 						}
 					// right side
@@ -607,7 +607,7 @@ module.exports = function(Chart) {
 						labelX = me.left - optionTicks.padding;
 						textAlign = 'right';
 					} else {
-						labelX = me.left + optionTicks.padding;
+						labelX = me.left + tl + optionTicks.padding;
 						textAlign = 'left';
 					}
 

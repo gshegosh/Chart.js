@@ -36,7 +36,7 @@ describe('Category scale tests', function() {
 				minRotation: 0,
 				maxRotation: 50,
 				mirror: false,
-				padding: 10,
+				padding: 0,
 				reverse: false,
 				display: true,
 				callback: defaultConfig.ticks.callback,  // make this nicer, then check explicitly below
@@ -430,7 +430,7 @@ describe('Category scale tests', function() {
 
 		var minSize = scale.update(100, 200);
 
-		expect(scale.width).toBe(70);
+		expect(scale.width).toBe(60);
 		expect(scale.height).toBe(200);
 		expect(scale.paddingTop).toBe(6);
 		expect(scale.paddingBottom).toBe(6);
@@ -439,7 +439,7 @@ describe('Category scale tests', function() {
 		expect(scale.labelRotation).toBe(0);
 
 		expect(minSize).toEqual({
-			width: 70,
+			width: 60,
 			height: 200,
 		});
 
