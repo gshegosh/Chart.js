@@ -674,7 +674,7 @@ module.exports = function(Chart) {
 			}
 
 			// if we scaled the canvas in response to a devicePixelRatio !== 1, we need to undo that transform here
-			if (me.chart.originalDevicePixelRatio !== undefined) {
+			if (me.chart.originalDevicePixelRatio !== undefined && me.chart.ctx) {
 				me.chart.ctx.scale(1 / me.chart.originalDevicePixelRatio, 1 / me.chart.originalDevicePixelRatio);
 			}
 
