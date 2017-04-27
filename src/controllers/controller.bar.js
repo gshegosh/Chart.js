@@ -97,7 +97,7 @@ module.exports = function(Chart) {
 
 				// Appearance
 				base: reset ? scaleBase : me.calculateBarBase(me.index, index),
-				width: me.calculateBarWidth(ruler),
+				width: me.calculateBarWidth(ruler, rectangle),
 				backgroundColor: custom.backgroundColor ? custom.backgroundColor : helpers.getValueAtIndexOrDefault(dataset.backgroundColor, index, rectangleElementOptions.backgroundColor),
 				borderSkipped: custom.borderSkipped ? custom.borderSkipped : rectangleElementOptions.borderSkipped,
 				borderColor: custom.borderColor ? custom.borderColor : helpers.getValueAtIndexOrDefault(dataset.borderColor, index, rectangleElementOptions.borderColor),
@@ -171,12 +171,16 @@ module.exports = function(Chart) {
 			};
 		},
 
-		calculateBarWidth: function(ruler) {
+		calculateBarWidth: function(ruler, rectangle) {
 			var me = this;
 			var meta = me.getMeta();
 			var xScale = me.getScaleForId(meta.xAxisID);
 			if (xScale.options.barThickness) {
-				return xScale.options.barThickness;
+				if (typeof xScale.options.barThickness === 'function') {
+					return xScale.options.barThickness(ruler, rectangle);
+				} else {
+					return xScale.options.barThickness;
+				}
 			}
 			return ruler.barWidth;
 		},
