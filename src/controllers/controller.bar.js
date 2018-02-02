@@ -123,15 +123,20 @@ function computeMinSampleSize(scale, pixels) {
  * mode currently always generates bars equally sized (until we introduce scriptable options?).
  * @private
  */
-function computeFitCategoryTraits(index, ruler, options) {
+function computeFitCategoryTraits(datasetIndex, index, ruler, options) {
 	var thickness = options.barThickness;
 	var count = ruler.stackCount;
 	var curr = ruler.pixels[index];
 	var size, ratio;
 
-	if (helpers.isNullOrUndef(thickness)) {
+	if (helpers.isNullOrUndefOrFunc(thickness)) {
 		size = ruler.min * options.categoryPercentage;
 		ratio = options.barPercentage;
+	    if (typeof thickness === 'function') {
+			var rulerCopy = Object.assign({}, ruler);
+			rulerCopy.barWidth = size / count;
+			size = thickness(rulerCopy, datasetIndex) * count;
+	    }
 	} else {
 		// When bar thickness is enforced, category and bar percentages are ignored.
 		// Note(SB): we could add support for relative bar thickness (e.g. barThickness: '50%')
@@ -359,7 +364,7 @@ module.exports = function(Chart) {
 				pixels.push(scale.getPixelForValue(null, i, datasetIndex));
 			}
 
-			min = helpers.isNullOrUndef(scale.options.barThickness)
+			min = helpers.isNullOrUndefOrFunc(scale.options.barThickness)
 				? computeMinSampleSize(scale, pixels)
 				: -1;
 
@@ -426,7 +431,7 @@ module.exports = function(Chart) {
 			var options = ruler.scale.options;
 			var range = options.barThickness === 'flex'
 				? computeFlexCategoryTraits(index, ruler, options)
-				: computeFitCategoryTraits(index, ruler, options);
+				: computeFitCategoryTraits(datasetIndex, index, ruler, options);
 
 			var stackIndex = me.getStackIndex(datasetIndex, me.getMeta().stack);
 			var center = range.start + (range.chunk * stackIndex) + (range.chunk / 2);

@@ -31,6 +31,10 @@ var helpers = {
 		return value === null || typeof value === 'undefined';
 	},
 
+	isNullOrUndefOrFunc: function(value) {
+		return value === null || typeof value === 'undefined' || typeof value === 'function';
+	},
+
 	/**
 	 * Returns true if `value` is an array, else returns false.
 	 * @param {*} value - The value to test.
